@@ -68,9 +68,11 @@
 
             <input type="number" id="precio" placeholder="Precio">
 
+            <input type="number" id="cantidad" placeholder="Cantidad en stock" min="1" value="1">
+
             <input type="text" id="imagen" placeholder="URL de la imagen">
 
-            <textarea id="descripcion" placeholder="Descripción"></textarea>
+            <textarea id="descripcion" maxlength="200" placeholder="Descripción"></textarea>
 
             <button id="btn-agregar-producto">
                 Agregar producto
@@ -87,144 +89,70 @@
         Mis productos
     </h3>
 
+    <div class="buscador">
+        <span class="buscador-icono">🔍</span>
+        <input type="text" id="input-buscar-producto" placeholder="Buscar en mis productos...">
+    </div>
+
     <div class="productos-container" id="contenedor-productos">
-        <div class="card">
-        <img src="../Imagenes/game-a-hat-in-time.jpg" alt="">
-        <h4>Producto 1</h4>
-        <p>$10.00</p>
-
-        <div class="acciones">
-            <button class="btn-editar">Editar</button>
-            <button class="btn-eliminar">Eliminar</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="../Imagenes/game-a-hat-in-time.jpg" alt="">
-        <h4>Producto 2</h4>
-        <p>$15.00</p>
-
-        <div class="acciones">
-            <button class="btn-editar">Editar</button>
-            <button class="btn-eliminar">Eliminar</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="../Imagenes/game-a-hat-in-time.jpg" alt="">
-        <h4>Producto 3</h4>
-        <p>$20.00</p>
-
-        <div class="acciones">
-            <button class="btn-editar">Editar</button>
-            <button class="btn-eliminar">Eliminar</button>
-        </div>
-    </div>
-    <div class="card">
-        <img src="../Imagenes/game-a-hat-in-time.jpg" alt="">
-        <h4>Producto 1</h4>
-        <p>$10.00</p>
-
-        <div class="acciones">
-            <button class="btn-editar">Editar</button>
-            <button class="btn-eliminar">Eliminar</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="../Imagenes/game-a-hat-in-time.jpg" alt="">
-        <h4>Producto 2</h4>
-        <p>$15.00</p>
-
-        <div class="acciones">
-            <button class="btn-editar">Editar</button>
-            <button class="btn-eliminar">Eliminar</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="../Imagenes/game-a-hat-in-time.jpg" alt="">
-        <h4>Producto 3</h4>
-        <p>$20.00</p>
-
-        <div class="acciones">
-            <button class="btn-editar">Editar</button>
-            <button class="btn-eliminar">Eliminar</button>
-        </div>
-    </div>
-    <div class="card">
-        <img src="../Imagenes/game-a-hat-in-time.jpg" alt="">
-        <h4>Producto 1</h4>
-        <p>$10.00</p>
-
-        <div class="acciones">
-            <button class="btn-editar">Editar</button>
-            <button class="btn-eliminar">Eliminar</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="../Imagenes/game-a-hat-in-time.jpg" alt="">
-        <h4>Producto 2</h4>
-        <p>$15.00</p>
-
-        <div class="acciones">
-            <button class="btn-editar">Editar</button>
-            <button class="btn-eliminar">Eliminar</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="../Imagenes/game-a-hat-in-time.jpg" alt="">
-        <h4>Producto 3</h4>
-        <p>$20.00</p>
-
-        <div class="acciones">
-            <button class="btn-editar">Editar</button>
-            <button class="btn-eliminar">Eliminar</button>
-        </div>
-    </div>
-    <div class="card">
-        <img src="../Imagenes/game-a-hat-in-time.jpg" alt="">
-        <h4>Producto 3</h4>
-        <p>$20.00</p>
-
-        <div class="acciones">
-            <button class="btn-editar">Editar</button>
-            <button class="btn-eliminar">Eliminar</button>
-        </div>
-    </div>
+        <!-- Los productos se inyectan dinámicamente desde productos.js -->
     </div>
 
 
-    <!-- FORM ACTUALIZAR PRODUCTO -->
+    <!-- MODAL EDITAR PRODUCTO -->
+    <div id="modal-editar-producto" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Editar producto</h3>
 
-    <div id="formActualizar" class="card actualizar" style="display:none;">
+            <input type="hidden" id="modal-producto-id">
 
-        <h3>Actualizar Producto</h3>
+            <div class="form-grid">
+                <input type="text" id="modal-nombre-producto" placeholder="Nombre del producto">
+                <input type="number" id="modal-precio-producto" placeholder="Precio">
+                <input type="number" id="modal-cantidad-producto" placeholder="Cantidad en stock" min="1" value="1">
+                <input type="text" id="modal-imagen-producto" placeholder="URL de la imagen">
+                <textarea id="modal-descripcion-producto" placeholder="Descripción"></textarea>
+            </div>
 
-        <div class="form-grid">
-
-            <input type="text" id="nombreActualizar" placeholder="Nombre del producto">
-
-            <input type="number" id="precioActualizar" placeholder="Precio">
-
-            <input type="text" id="imagenActualizar" placeholder="URL de la imagen">
-
-            <textarea id="descripcionActualizar" placeholder="Descripción"></textarea>
-
-            <button id="btn-actualizar-producto">
-                Actualizar producto
-            </button>
-
+            <div class="modal-botones">
+                <button id="btn-guardar-producto" class="btn-modal-primary">Guardar cambios</button>
+                <button class="btn-modal-cancelar" onclick="document.getElementById('modal-editar-producto').style.display='none'">Cancelar</button>
+            </div>
         </div>
+    </div>
 
+     <!-- MODAL VER DESCRIPCIÓN COMPLETA -->
+      <div id="modal-ver-descripcion" class="modal-overlay">
+        <div class="modal-box">
+            <h3 id="modal-desc-titulo">Título del producto</h3>
+            <p id="modal-desc-texto"></p>
+            <div class="modal-botones">
+                <button class="btn-modal-cancelar" onclick="document.getElementById('modal-ver-descripcion').style.display='none'">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL ELIMINAR PRODUCTO -->
+    <div id="modal-eliminar-producto" class="modal-overlay">
+        <div class="modal-box modal-box-small">
+            <h3>Eliminar producto</h3>
+            <p>¿Seguro que deseas eliminar este producto? Esta acción no se puede deshacer.</p>
+
+            <input type="hidden" id="modal-eliminar-producto-id">
+
+            <div class="modal-botones">
+                <button class="btn-modal-danger">Eliminar</button>
+                <button class="btn-modal-cancelar" onclick="document.getElementById('modal-eliminar-producto').style.display='none'">Cancelar</button>
+            </div>
+        </div>
     </div>
 
 </div>
 
 <script src="../Funcionalidad/menuHambuguesa.js"></script>
 <script src="../Funcionalidad/navbar.js"></script>
+<script src="../Funcionalidad/productos.js"></script>
 <script>
     // Abre y cierra el carrito al presionar el botón en móvil
 document.querySelector('#nav-cart > a').addEventListener('click', function(e) {

@@ -134,7 +134,7 @@ body {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     border: 1px solid #eef0f3;
     margin-top: 12px;
-    
+
     display: block;
     opacity: 0;
     visibility: hidden;
@@ -344,7 +344,7 @@ textarea {
 
 
 /* ==========================================================================
-   8. SECCIÓN MIS PRODUCTOS (Premium Card Look del Primero)
+   8. SECCIÓN MIS PRODUCTOS (Cards uniformes, sin importar el largo del texto)
    ========================================================================== */
 .titulo-productos {
     font-size: 22px;
@@ -357,6 +357,8 @@ textarea {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 25px;
+    /* que todas las cards de una misma fila tengan igual altura */
+    align-items: stretch;
 }
 
 .productos-container .card {
@@ -370,6 +372,8 @@ textarea {
     flex-direction: column;
     text-align: left;
     transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+    /* altura fija: nada dentro puede "inflar" la card */
+    height: 420px;
 }
 
 .productos-container .card:hover {
@@ -379,12 +383,13 @@ textarea {
 
 .productos-container .card img {
     width: 100%;
-    height: 180px;
+    height: 160px;
     object-fit: contain;
     padding: 15px;
     background: #ffffff;
     border-bottom: 1px solid #f7f9fa;
     margin-bottom: 0;
+    flex-shrink: 0;
 }
 
 .productos-container .card h4 {
@@ -392,14 +397,74 @@ textarea {
     color: #2d3748;
     font-weight: 600;
     padding: 15px 20px 5px 20px;
+    /* título a una sola línea con "..." si es muy largo */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.productos-container .card p {
-    font-size: 20px;
+/* Precio: clase propia, ya NO afecta a la descripción */
+.productos-container .card p.precio {
+    font-size: 19px;
     font-weight: 700;
     color: #0d6efd;
-    padding: 0 20px 15px 20px;
-    margin-top: auto;
+    padding: 0 20px 10px 20px;
+}
+
+.stock-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #0d6efd;
+    background: rgba(13, 110, 253, 0.1);
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin: 0 20px 12px 20px;
+    width: fit-content;
+}
+
+/* Descripción: recortada a 3 líneas + enlace para ver completa */
+.descripcion {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.45;
+    color: #6b7280;
+    padding: 0 20px;
+    margin-bottom: 4px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ver-mas {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #0d6efd;
+    background: none;
+    border: none;
+    padding: 0 20px;
+    margin: 0 0 12px 0;
+    cursor: pointer;
+    text-align: left;
+}
+
+.ver-mas:hover {
+    text-decoration: underline;
+}
+
+#modal-descripcion-producto .modal-box p {
+    color: #4a5568;
+    line-height: 1.6;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+#modalDescripcion .modal-box h3 {
+    color: #0d6efd;
 }
 
 .acciones {
@@ -407,6 +472,8 @@ textarea {
     grid-template-columns: 1fr 1fr;
     gap: 10px;
     padding: 0 20px 20px 20px;
+    /* siempre pegados al fondo de la card, sin importar el texto de arriba */
+    margin-top: auto;
 }
 
 .acciones button {
@@ -440,9 +507,185 @@ textarea {
     transform: scale(0.96);
 }
 
+/* ==========================================================================
+   9. BUSCADOR (Mis productos)
+   ========================================================================== */
+.buscador {
+    display: flex;
+    align-items: center;
+    max-width: 480px;
+    margin: 0 0 25px 0;
+    background: white;
+    border-radius: 999px;
+    padding: 4px 4px 4px 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid #eef0f3;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.buscador:focus-within {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+.buscador-icono {
+    font-size: 14px;
+    color: #99a1ac;
+    margin-right: 8px;
+    line-height: 1;
+}
+
+.buscador input {
+    flex: 1;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    padding: 10px 0;
+    font-size: 14px;
+}
+
 
 /* ==========================================================================
-   9. RESPONSIVE MEDIA QUERIES (Hamburguesa e Interfaz Móvil Completamente Corregida)
+   10. MODALES (Editar / Eliminar producto)
+   ========================================================================== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    align-items: center;
+    justify-content: center;
+    z-index: 1500;
+    padding: 1rem;
+}
+
+.modal-box {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    text-align: left;
+}
+
+.modal-box-small {
+    max-width: 360px;
+    text-align: center;
+}
+
+.modal-box h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 15px;
+}
+
+.modal-box p {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.modal-box .form-grid {
+    margin-bottom: 20px;
+}
+
+.modal-botones {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.modal-box-small .modal-botones {
+    justify-content: center;
+}
+
+.modal-botones button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.modal-botones button:active {
+    transform: scale(0.97);
+}
+
+.btn-modal-primary {
+    background: #0d6efd;
+    color: white;
+}
+
+.btn-modal-primary:hover {
+    background: #0b5ed7;
+}
+
+.btn-modal-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-modal-danger:hover {
+    background: #c82333;
+}
+
+.btn-modal-cancelar {
+    background: #f1f2f4;
+    color: #333;
+}
+
+.btn-modal-cancelar:hover {
+    background: #e4e6e9;
+}
+/* ==========================================================================
+   11. TOASTS (Notificaciones flotantes)
+   ========================================================================== */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 2000;
+}
+
+.toast {
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    max-width: 320px;
+}
+
+.toast-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast-success {
+    background: #28a745;
+}
+
+.toast-error {
+    background: #dc3545;
+}
+/* ==========================================================================
+   12. RESPONSIVE MEDIA QUERIES (Hamburguesa e Interfaz Móvil Completamente Corregida)
    ========================================================================== */
 .menu-toggle {
     display: none;
@@ -485,14 +728,14 @@ textarea {
         width: 80%;
         justify-content: center;
     }
-    
+
     #nav-user a {
         width: 100%;
         justify-content: center;
         background: rgba(255, 255, 255, 0.2);
     }
 
-    /* CARRITO FLOTANTE EN MÓVIL 
+    /* CARRITO FLOTANTE EN MÓVIL
        Solución definitiva: Centrado elástico con transform que se reinicia limpiamente */
     #carrito {
         position: absolute;
@@ -538,13 +781,18 @@ textarea {
         grid-template-columns: 1fr;
         gap: 15px;
     }
+
+    .productos-container .card {
+        height: auto;
+        min-height: 380px;
+    }
 }
 
 @media (max-width: 480px) {
     .logo { font-size: 20px; }
     .nav-links a { font-size: 14px; }
     .acciones { grid-template-columns: 1fr; }
-    
+
     /* Reajuste elástico milimétrico para pantallas extremadamente compactas */
     #carrito {
         width: 88vw;

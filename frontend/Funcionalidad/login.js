@@ -15,7 +15,7 @@ formLogin.addEventListener("submit", async (e) => {
         password,
     }
 
-    // Cambiamos a un try/catch para controlar si se cae el servidor de Node
+    // hacemos un try/catch para controlar si se cae el servidor de Node
     try {
         const res = await fetch("http://localhost:3000/login", {
             method: "POST",

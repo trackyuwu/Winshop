@@ -15,7 +15,7 @@ function actualizarNavbar(){
         logout.style.display = "block";
         user.style.display = "block";
         carrito.style.display = "block";
-        user.querySelector("a").textContent = usuarioObjeto.correo.split("@")[0];
+        user.querySelector("a").textContent = usuarioObjeto.nombre
         if(usuarioObjeto.rol === "vendedor"){
             panelVendedor.style.display = "block"
         }else if(usuarioObjeto.rol === "admin"){

@@ -514,6 +514,151 @@ body {
         gap: 20px;
     }
 }
+/* ==========================
+   Overlay (fondo oscuro)
+========================== */
+.modal-overlay {
+    display: none; /* se muestra con JS poniendo "flex" */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+/* ==========================
+   Caja del modal
+========================== */
+.modal-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.75rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    animation: modal-aparecer 0.2s ease-out;
+}
+
+.modal-box-small {
+    max-width: 360px;
+    text-align: center;
+}
+
+@keyframes modal-aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(-12px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-box h3 {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+    color: #1a1a1a;
+}
+
+.modal-box p {
+    color: #555;
+    margin-bottom: 1.25rem;
+    line-height: 1.4;
+}
+
+/* ==========================
+   Formulario dentro del modal
+========================== */
+.modal-box .form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.modal-box input,
+.modal-box textarea {
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.modal-box input:focus,
+.modal-box textarea:focus {
+    outline: none;
+    border-color: #6c5ce7;
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+}
+
+.modal-box textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* ==========================
+   Botones del modal
+========================== */
+.modal-botones {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: flex-end;
+}
+
+.modal-box-small .modal-botones {
+    justify-content: center;
+}
+
+.modal-botones button {
+    padding: 0.6rem 1.1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+.modal-botones button:hover {
+    opacity: 0.9;
+}
+
+.modal-botones button:active {
+    transform: scale(0.97);
+}
+
+.btn-modal-primary {
+    background: #6c5ce7;
+    color: #fff;
+}
+
+.btn-modal-danger {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.btn-modal-cancelar {
+    background: #f1f1f1;
+    color: #333;
+}
+
+/* ==========================
+   Responsive
+========================== */
+@media (max-width: 480px) {
+    .modal-box {
+        padding: 1.25rem;
+    }
+}
 
 /* Teléfonos Pequeños */
 @media (max-width: 480px) {
