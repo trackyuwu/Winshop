@@ -1,3 +1,11 @@
+// Protección de acceso: solo admin o vendedor pueden ver este panel
+const usuarioTexto = localStorage.getItem("usuarios");
+const usuarioObjeto = usuarioTexto ? JSON.parse(usuarioTexto) : null;
+
+if (!usuarioObjeto || (usuarioObjeto.rol !== "admin" && usuarioObjeto.rol !== "vendedor")) {
+    window.location.href = "../Estructura/Index.html";
+}
+
 function obtenerUsuarioActual() {
     const usuario = localStorage.getItem("usuarios");
     return usuario ? JSON.parse(usuario) : null;

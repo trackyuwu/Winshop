@@ -1,3 +1,11 @@
+// Protección de acceso: solo admin puede ver este panel
+const usuarioTexto = localStorage.getItem("usuarios");
+const usuarioObjeto = usuarioTexto ? JSON.parse(usuarioTexto) : null;
+
+if (!usuarioObjeto || usuarioObjeto.rol !== "admin") {
+    window.location.href = "../Estructura/Index.html";
+}
+
 let listaUsuariosGlobal = [];
 
 async function usuarios() {

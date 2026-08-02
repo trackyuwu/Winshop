@@ -58,86 +58,53 @@
     </div>
 </header>
 
+<section class="categorias-section">
+    <h2>Explorar por categorías</h2>
+    <div class="categorias-container">
+        <a href="#" class="categoria-item">
+            <div class="categoria-icono">Gaming 🎮</div>
+        </a>
+        <a href="#" class="categoria-item">
+            <div class="categoria-icono">Celulares 📱</div>
+        </a>
+        <a href="#" class="categoria-item">
+            <div class="categoria-icono">Laptops 💻</div>
+        </a>
+        <a href="#" class="categoria-item">
+            <div class="categoria-icono">Audio 🎧</div>
+        </a>
+        <a href="#" class="categoria-item">
+            <div class="categoria-icono">Moda 👕</div>
+        </a>
+        <a href="#" class="categoria-item">
+            <div class="categoria-icono">Hogar 🏠</div>
+        </a>
+    </div>
+</section>
+
 
 <section id="productos">
     <div class="productos-container" id="contenedor-productos">
-
-        <div class="card">
-            <img src="../Imagenes/game-a-hat-in-time.jpg" alt="Producto 1">
-            <h3>Producto 1</h3>
-            <p>$10.00</p>
-            <button class="btn-agregar">Agregar</button>
-        </div>
-
-        <div class="card">
-            <img src="../Imagenes/game-a-hat-in-time.jpg" alt="Producto 2">
-            <h3>Producto 2</h3>
-            <p>$15.00</p>
-            <button class="btn-agregar">Agregar</button>
-        </div>
-
-        <div class="card">
-            <img src="../Imagenes/game-a-hat-in-time.jpg" alt="Producto 3">
-            <h3>Producto 3</h3>
-            <p>$20.00</p>
-            <button class="btn-agregar">Agregar</button>
-        </div>
-
-        <div class="card">
-            <img src="../Imagenes/game-a-hat-in-time.jpg" alt="Producto 4">
-            <h3>Producto 4</h3>
-            <p>$25.00</p>
-            <button class="btn-agregar">Agregar</button>
-        </div>
-
-        <div class="card">
-            <img src="../Imagenes/game-a-hat-in-time.jpg" alt="Producto 5">
-            <h3>Producto 5</h3>
-            <p>$30.00</p>
-            <button class="btn-agregar">Agregar</button>
-        </div>
-
-        <div class="card">
-            <img src="../Imagenes/game-a-hat-in-time.jpg" alt="Producto 6">
-            <h3>Producto 6</h3>
-            <p>$35.00</p>
-            <button class="btn-agregar">Agregar</button>
-        </div>
-
-        <div class="card">
-            <img src="../Imagenes/game-a-hat-in-time.jpg" alt="Producto 7">
-            <h3>Producto 7</h3>
-            <p>$40.00</p>
-            <button class="btn-agregar">Agregar</button>
-        </div>
-
-        <div class="card">
-            <img src="../Imagenes/game-a-hat-in-time.jpg" alt="Producto 8">
-            <h3>Producto 8</h3>
-            <p>$45.00</p>
-            <button class="btn-agregar">Agregar</button>
-        </div>
-
-        <div class="card">
-            <img src="../Imagenes/game-a-hat-in-time.jpg" alt="Producto 9">
-            <h3>Producto 9</h3>
-            <p>$50.00</p>
-            <button class="btn-agregar">Agregar</button>
-        </div>
-
-        <div class="card">
-            <img src="../Imagenes/game-a-hat-in-time.jpg" alt="Producto 10">
-            <h3>Producto 10</h3>
-            <p>$60.00</p>
-            <button class="btn-agregar">Agregar</button>
-        </div>
-
-        </div>
+        <!-- Los productos publicados por vendedores/admin se inyectan aquí desde la DB -->
+    </div>
 </section>
+
+<!-- MODAL VER DESCRIPCIÓN COMPLETA -->
+<div id="modal-descripcion" class="modal-overlay">
+    <div class="modal-box">
+        <h3 id="modal-descripcion-titulo"></h3>
+        <p id="modal-descripcion-texto"></p>
+
+        <div class="modal-botones">
+            <button class="btn-modal-cancelar" onclick="document.getElementById('modal-descripcion').style.display='none'">Cerrar</button>
+        </div>
+    </div>
+</div>
 
 <script src="../Funcionalidad/menuHambuguesa.js"></script>
 <script src="../Funcionalidad/authentication.js"></script>
 <script src="../Funcionalidad/navbar.js"></script>
+<script src="../Funcionalidad/productosPrincipal.js"></script>
 <script>
     // Abre y cierra el carrito al presionar el botón en móvil
 document.querySelector('#nav-cart > a').addEventListener('click', function(e) {

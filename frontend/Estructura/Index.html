@@ -154,7 +154,7 @@
     <h2>Explorar por categorías</h2>
     <div class="categorias-container">
         <a href="#" class="categoria-item">
-            <div class="categoria-icono">Consolas 🎮</div>
+            <div class="categoria-icono">Gaming 🎮</div>
         </a>
         <a href="#" class="categoria-item">
             <div class="categoria-icono">Celulares 📱</div>
@@ -240,7 +240,16 @@
 
     </div>
 </section>
+<section class="vitrina-section">
+    <div class="section-title-container">
+        <h2>Recién llegados 🆕</h2>
+        <a href="productos.html" class="ver-mas-link">Ver todo el catálogo →</a>
+    </div>
 
+    <div class="vitrina-container" id="vitrina-productos">
+        <!-- Los últimos productos publicados se inyectan aquí desde vitrina.js -->
+    </div>
+</section>
 
 <script>
     let currentSlide = 0;
@@ -298,6 +307,7 @@ document.getElementById('carrito').addEventListener('click', function(e) {
 <script src="../Funcionalidad/menuHambuguesa.js"></script>
 <script src="../Funcionalidad/authentication.js"></script>
 <script src="../Funcionalidad/navbar.js"></script>
+<script src="../Funcionalidad/recienLLegados.js"></script>
 
 </body>
 </html>
