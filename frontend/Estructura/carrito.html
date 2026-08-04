@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WinShop - Tu carrito</title>
+
+    <link rel="stylesheet" href="../Diseño/carrito.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">Win<span>Shop</span></div>
+
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+
+        <ul class="nav-links" id="nav-links">
+            <li id="nav-login"><a href="login.html">Iniciar sesión</a></li>
+            <li id="nav-user" style="display:none"><a href="#"></a></li>
+            <li><a href="Index.html">Inicio</a></li>
+            <li id="nav-productos"><a href="productos.html">Productos</a></li>
+            <li id="nav-register"><a href="registro.html">Registrarse</a></li>
+            <li id="nav-support"><a href="contacto.html">Soporte</a></li>
+
+            <li id="nav-cart" style="display: none;">
+                <a href="carrito.html" class="cart-badge active-link">🛒 <span id="cart-count">0</span></a>
+            </li>
+
+            <li id="nav-panelAdmin" style="display:none"><a href="panelAdmin.html">Administración</a></li>
+            <li id="nav-panel" style="display:none"><a href="panelVendedor.html">Ventas</a></li>
+            <li id="nav-logout" style="display: none;"><a href="#">Cerrar sesión</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<header class="header-carrito">
+    <h1>Tu carrito</h1>
+    <p>Revisa tus productos antes de confirmar la compra</p>
+</header>
+
+
+<section id="carrito">
+    <h3>Tu carrito</h3>
+
+    <div id="Productos-agregados">
+        <ul>
+            <!-- Los productos agregados al carrito se inyectan aquí, uno por <li> -->
+        </ul>
+    </div>
+
+    <div id="carrito-vacio" style="display:none;">
+        <p>Tu carrito está vacío.</p>
+        <a href="productos.html" class="btn-seguir-comprando">Ver productos</a>
+    </div>
+
+    <div class="total-box">
+        <p>Total: <span id="totalCarrito">0</span></p>
+    </div>
+
+    <button id="confirm">Confirmar compra</button>
+</section>
+
+
+<!-- MODAL CONFIRMACIÓN DE COMPRA -->
+<div id="modal-confirmar-compra" class="modal-overlay">
+    <div class="modal-box">
+        <h3>¿Confirmar tu compra?</h3>
+        <p>Esta acción vaciará tu carrito y generará el pedido.</p>
+
+        <div class="modal-botones">
+            <button id="btn-confirmar-si" class="btn-modal-primary">Sí, confirmar</button>
+            <button class="btn-modal-cancelar" onclick="document.getElementById('modal-confirmar-compra').style.display='none'">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script src="../Funcionalidad/menuHambuguesa.js"></script>
+<script src="../Funcionalidad/authentication.js"></script>
+<script src="../Funcionalidad/navbar.js"></script>
+
+</body>
+</html>

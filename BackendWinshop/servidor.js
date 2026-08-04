@@ -13,6 +13,7 @@ const client = new MongoClient(url);
 let db;
 let coleccion;
 let coleccion_productos;
+let coleccion_categorias;
 
 async function conectar(){
     await client.connect();
@@ -20,6 +21,7 @@ async function conectar(){
     console.log("MongoDB conectado");
     coleccion = db.collection("usuarios");
     coleccion_productos = db.collection("productos");
+    coleccion_categorias = db.collection("categorias");
 }
 
 conectar();
@@ -37,12 +39,22 @@ app.get("/usuarios", async (req, res) => {
     const usuarios = await coleccion.find().toArray();
     res.json(usuarios);
 });
+app.get("/categorias", async (req, res) => {
+    try {
+        const categorias = await coleccion_categorias.find().toArray();
+        res.json(categorias);
+    } catch (error) {
+        console.error("Error al obtener categorías:", error);
+        res.status(500).json({ mensaje: "Error al obtener categorías" });
+    }
+});
 
 // Obtener todos los productos
 app.get("/productos", async (req, res) => {
     try {
         const { vendedorId } = req.query;
         const filtro = vendedorId ? { vendedorId } : {};
+
 
         const productos = await coleccion_productos.find(filtro).toArray();
         res.json(productos);
@@ -206,7 +218,7 @@ app.put('/productos/:id', async (req, res) => {
     try {
         const idProducto = req.params.id; 
 
-        const { nombre, precio, stock, imagen, descripcion } = req.body;
+        const { nombre, precio, stock, imagen, descripcion, categoria } = req.body;
         
         // 1. Buscamos primero al usuario real para verificar su rol actual
         const productoActualizar = await coleccion_productos.findOne({ _id: new ObjectId(idProducto) });
@@ -231,7 +243,8 @@ app.put('/productos/:id', async (req, res) => {
                     precio,
                     stock,
                     imagen,
-                    descripcion
+                    descripcion,
+                    categoria
                 }
             }
         );

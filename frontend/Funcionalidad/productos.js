@@ -14,14 +14,50 @@ function obtenerUsuarioActual() {
 let listaProductosGlobal = [];
 
 // ==========================
+// Cargar categorías en los selects
+// ==========================
+async function cargarCategorias() {
+    try {
+        const res = await fetch("http://localhost:3000/categorias");
+        const categorias = await res.json();
+
+        const selectAgregar = document.getElementById("categoria");
+        const selectEditar = document.getElementById("modal-categoria-producto");
+
+        categorias.forEach((categoria) => {
+            const optionAgregar = document.createElement("option");
+            optionAgregar.value = categoria._id;
+            optionAgregar.textContent = categoria.nombre;
+            selectAgregar.appendChild(optionAgregar);
+
+            const optionEditar = document.createElement("option");
+            optionEditar.value = categoria._id;
+            optionEditar.textContent = categoria.nombre;
+            selectEditar.appendChild(optionEditar);
+        });
+    } catch (error) {
+        console.error("Error al cargar categorías:", error);
+    }
+}
+
+// ==========================
+// Obtener productos
+// ==========================
+// ==========================
 // Obtener productos
 // ==========================
 async function productos() {
     try {
         const usuario = obtenerUsuarioActual();
-        const vendedorId = usuario?._id;
+        const esAdmin = usuario?.rol === "admin";
 
-        const res = await fetch(`http://localhost:3000/productos?vendedorId=${vendedorId}`);
+        // El admin ve todos los productos (sin filtrar).
+        // El vendedor solo ve los suyos.
+        const url = esAdmin
+            ? "http://localhost:3000/productos"
+            : `http://localhost:3000/productos?vendedorId=${usuario?._id}`;
+
+        const res = await fetch(url);
         const productosData = await res.json();
 
         listaProductosGlobal = productosData;
@@ -99,8 +135,8 @@ const btnAgregarProducto = document.getElementById("btn-agregar-producto");
 btnAgregarProducto.addEventListener("click", agregarProducto);
 
 async function agregarProducto() {
-    const campos = ["nombre", "precio", "cantidad", "imagen", "descripcion"];
-    const [nombre, precio, cantidad, imagen, descripcion] = campos.map(
+    const campos = ["nombre", "precio", "cantidad", "imagen", "categoria", "descripcion"];
+    const [nombre, precio, cantidad, imagen, categoria, descripcion] = campos.map(
         id => document.getElementById(id).value
     );
 
@@ -111,7 +147,7 @@ async function agregarProducto() {
         const res = await fetch("http://localhost:3000/productos", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nombre, precio, stock: cantidad, imagen, descripcion, vendedorId }),
+            body: JSON.stringify({ nombre, precio, stock: cantidad, imagen, categoria, descripcion, vendedorId }),
         });
 
         const datosServidor = await res.json();
@@ -144,6 +180,7 @@ function abrirModalEditarProducto(id) {
     document.getElementById("modal-precio-producto").value = producto.precio;
     document.getElementById("modal-cantidad-producto").value = producto.stock ?? 1;
     document.getElementById("modal-imagen-producto").value = producto.imagen;
+    document.getElementById("modal-categoria-producto").value = producto.categoria ?? "";
     document.getElementById("modal-descripcion-producto").value = producto.descripcion ?? "";
 
     document.getElementById("modal-editar-producto").style.display = "flex";
@@ -187,8 +224,8 @@ btnGuardarProducto.addEventListener("click", actualizarProducto);
 
 async function actualizarProducto() {
     const id = document.getElementById("modal-producto-id").value;
-    const campos = ["nombre-producto", "precio-producto", "cantidad-producto", "imagen-producto", "descripcion-producto"];
-    const [nombre, precio, cantidad, imagen, descripcion] = campos.map(
+    const campos = ["nombre-producto", "precio-producto", "cantidad-producto", "imagen-producto", "categoria-producto", "descripcion-producto"];
+    const [nombre, precio, cantidad, imagen, categoria, descripcion] = campos.map(
         campo => document.getElementById(`modal-${campo}`).value
     );
 
@@ -196,7 +233,7 @@ async function actualizarProducto() {
         const res = await fetch(`http://localhost:3000/productos/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nombre, precio, stock: cantidad, imagen, descripcion }),
+            body: JSON.stringify({ nombre, precio, stock: cantidad, imagen, categoria, descripcion }),
         });
 
         const datosServidor = await res.json();
@@ -249,3 +286,4 @@ async function eliminarProducto() {
 }
 
 productos();
+cargarCategorias();

@@ -72,6 +72,10 @@
 
             <input type="text" id="imagen" placeholder="URL de la imagen">
 
+            <select id="categoria">
+                <option value="" disabled selected>Selecciona una categoría</option>
+            </select>
+
             <textarea id="descripcion" maxlength="200" placeholder="Descripción"></textarea>
 
             <button id="btn-agregar-producto">
@@ -100,26 +104,31 @@
 
 
     <!-- MODAL EDITAR PRODUCTO -->
-    <div id="modal-editar-producto" class="modal-overlay">
-        <div class="modal-box">
-            <h3>Editar producto</h3>
+<div id="modal-editar-producto" class="modal-overlay">
+    <div class="modal-box">
+        <h3>Editar producto</h3>
 
-            <input type="hidden" id="modal-producto-id">
+        <input type="hidden" id="modal-producto-id">
 
-            <div class="form-grid">
-                <input type="text" id="modal-nombre-producto" placeholder="Nombre del producto">
-                <input type="number" id="modal-precio-producto" placeholder="Precio">
-                <input type="number" id="modal-cantidad-producto" placeholder="Cantidad en stock" min="1" value="1">
-                <input type="text" id="modal-imagen-producto" placeholder="URL de la imagen">
-                <textarea id="modal-descripcion-producto" placeholder="Descripción"></textarea>
-            </div>
+        <div class="form-grid">
+            <input type="text" id="modal-nombre-producto" placeholder="Nombre del producto">
+            <input type="number" id="modal-precio-producto" placeholder="Precio">
+            <input type="number" id="modal-cantidad-producto" placeholder="Cantidad en stock" min="1" value="1">
+            <input type="text" id="modal-imagen-producto" placeholder="URL de la imagen">
 
-            <div class="modal-botones">
-                <button id="btn-guardar-producto" class="btn-modal-primary">Guardar cambios</button>
-                <button class="btn-modal-cancelar" onclick="document.getElementById('modal-editar-producto').style.display='none'">Cancelar</button>
-            </div>
+            <select id="modal-categoria-producto">
+                <option value="" disabled>Selecciona una categoría</option>
+            </select>
+
+            <textarea id="modal-descripcion-producto" placeholder="Descripción"></textarea>
+        </div>
+
+        <div class="modal-botones">
+            <button id="btn-guardar-producto" class="btn-modal-primary">Guardar cambios</button>
+            <button class="btn-modal-cancelar" onclick="document.getElementById('modal-editar-producto').style.display='none'">Cancelar</button>
         </div>
     </div>
+</div>
 
      <!-- MODAL VER DESCRIPCIÓN COMPLETA -->
       <div id="modal-ver-descripcion" class="modal-overlay">
