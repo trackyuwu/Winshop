@@ -43,9 +43,7 @@ async function cargarCategorias() {
 // ==========================
 // Obtener productos
 // ==========================
-// ==========================
-// Obtener productos
-// ==========================
+
 async function productos() {
     try {
         const usuario = obtenerUsuarioActual();

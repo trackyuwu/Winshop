@@ -24,21 +24,10 @@
             <li><a href="Index.html" class="active-link">Inicio</a></li>
             <li id="nav-productos"><a href="productos.html">Productos</a></li>
             <li id="nav-register"><a href="registro.html">Registrarse</a></li>
-            <li id="nav-support"><a href="contacto.html">Soporte</a></li>
+            <li id="nav-support" style="display:none"><a href="contacto.html">Soporte</a></li>
             
             <li id="nav-cart" style="display: none;">
-                <a href="#" class="cart-badge">🛒 <span id="cart-count">0</span></a>
-                
-                <section id="carrito">
-                    <h3>Tu carrito</h3>
-                    <div id="Productos-agregados">
-                        <ul></ul>
-                    </div>
-                    <div class="total-box">
-                        <p>Total: <span id="totalCarrito">0</span></p>
-                    </div>
-                    <button id="confirm">Confirmar compra</button>
-                </section>
+                <a href="carrito.html" class="cart-badge">🛒 <span id="cart-count">0</span></a>
             </li>
 
             <li id="nav-panelAdmin" style="display:none"><a href="panelAdmin.html">Administración</a></li>
@@ -162,20 +151,7 @@
 <script src="../Funcionalidad/menuHambuguesa.js"></script>
 <script src="../Funcionalidad/navbar.js"></script>
 <script src="../Funcionalidad/productos.js"></script>
-<script>
-    // Abre y cierra el carrito al presionar el botón en móvil
-document.querySelector('#nav-cart > a').addEventListener('click', function(e) {
-    if (window.innerWidth <= 768) {
-        e.preventDefault(); 
-        document.getElementById('nav-cart').classList.toggle('active');
-    }
-});
-
-// Evita que el carrito se cierre si presionas dentro de él (lista de productos, confirmar compra, etc.)
-document.getElementById('carrito').addEventListener('click', function(e) {
-    e.stopPropagation();
-});
-</script>
+<script src="../Funcionalidad/carrito.js"></script>
 
 </body>
 </html>

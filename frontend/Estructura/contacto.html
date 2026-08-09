@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WinShop - Soporte</title>
+
+    <link rel="stylesheet" href="../Diseño/contacto.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">Win<span>Shop</span></div>
+
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+
+        <ul class="nav-links" id="nav-links">
+            <li id="nav-login"><a href="login.html">Iniciar sesión</a></li>
+            <li id="nav-user" style="display:none"><a href="#"></a></li>
+            <li><a href="Index.html">Inicio</a></li>
+            <li id="nav-productos"><a href="productos.html">Productos</a></li>
+            <li id="nav-register"><a href="registro.html">Registrarse</a></li>
+            <li id="nav-support"><a href="contacto.html" class="active-link">Soporte</a></li>
+            <li id="nav-cart" style="display: none;">
+                <a href="carrito.html" class="cart-badge">🛒 <span id="cart-count">0</span></a>
+            </li>
+
+            <li id="nav-panelAdmin" style="display:none"><a href="panelAdmin.html">Administración</a></li>
+            <li id="nav-panel" style="display:none"><a href="panelVendedor.html">Ventas</a></li>
+            <li id="nav-logout" style="display: none;"><a href="#">Cerrar sesión</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<header class="header header-soporte">
+    <h1>¿En qué podemos ayudarte?</h1>
+    <p>Escríbenos y te responderemos lo antes posible.</p>
+</header>
+
+
+<section class="soporte-info-container">
+    <div class="soporte-info-item">
+        <div class="soporte-info-icono">✉️</div>
+        <div class="soporte-info-texto">
+            <h4>Correo</h4>
+            <p>soporte@winshop.com</p>
+        </div>
+    </div>
+    <div class="soporte-info-item">
+        <div class="soporte-info-icono">📞</div>
+        <div class="soporte-info-texto">
+            <h4>Teléfono</h4>
+            <p>+57 300 000 0000</p>
+        </div>
+    </div>
+    <div class="soporte-info-item">
+        <div class="soporte-info-icono">🕒</div>
+        <div class="soporte-info-texto">
+            <h4>Horario</h4>
+            <p>Lunes a viernes, 9am - 6pm</p>
+        </div>
+    </div>
+</section>
+
+
+<section id="soporte-form-section">
+    <div class="card" id="formContacto">
+
+        <h3>Envíanos un mensaje</h3>
+
+        <div class="form-grid">
+
+            <input type="text" id="nombre" placeholder="Tu nombre">
+
+            <input type="email" id="correo" placeholder="Tu correo">
+
+            <input type="text" id="asunto" placeholder="Asunto">
+
+            <textarea id="mensaje" maxlength="500" placeholder="Cuéntanos en qué podemos ayudarte"></textarea>
+
+            <button id="btn-enviar-mensaje">
+                Enviar mensaje
+            </button>
+
+        </div>
+
+    </div>
+</section>
+
+
+<section class="faq-section">
+    <div class="section-title-container">
+        <h2>Preguntas frecuentes</h2>
+    </div>
+
+    <div class="faq-container">
+        <div class="faq-item">
+            <h4>¿Cómo hago seguimiento a mi pedido?</h4>
+            <p>Podrás ver el estado de tu compra desde tu carrito una vez confirmada.</p>
+        </div>
+        <div class="faq-item">
+            <h4>¿Qué métodos de pago aceptan?</h4>
+            <p>Aceptamos tarjetas de crédito, débito y pagos a cuotas sin tarjeta.</p>
+        </div>
+        <div class="faq-item">
+            <h4>¿Cómo contacto a un vendedor?</h4>
+            <p>Escríbenos por este formulario indicando el producto y te pondremos en contacto.</p>
+        </div>
+        <div class="faq-item">
+            <h4>¿Puedo devolver un producto?</h4>
+            <p>Sí, cuentas con compra protegida y devolución de tu dinero.</p>
+        </div>
+    </div>
+</section>
+
+<script src="../Funcionalidad/menuHambuguesa.js"></script>
+<script src="../Funcionalidad/authentication.js"></script>
+<script src="../Funcionalidad/navbar.js"></script>
+<script src="../Funcionalidad/carrito.js"></script>
+<script src="../Funcionalidad/contacto.js"></script>
+
+</body>
+</html>

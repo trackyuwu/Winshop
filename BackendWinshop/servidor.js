@@ -1,6 +1,7 @@
 const express = require("express");
 const { MongoClient, ObjectId } = require("mongodb");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
 
 const app = express();
 
@@ -14,6 +15,8 @@ let db;
 let coleccion;
 let coleccion_productos;
 let coleccion_categorias;
+let coleccion_soporte;
+let coleccion_carrito;
 
 async function conectar(){
     await client.connect();
@@ -22,6 +25,8 @@ async function conectar(){
     coleccion = db.collection("usuarios");
     coleccion_productos = db.collection("productos");
     coleccion_categorias = db.collection("categorias");
+    coleccion_soporte = db.collection("solicitudes");
+    coleccion_carrito = db.collection("carritos");
 }
 
 conectar();
@@ -63,6 +68,31 @@ app.get("/productos", async (req, res) => {
         res.status(500).json({ mensaje: "Hubo un error en el servidor" });
     }
 });
+// Obtener las solicitudes 
+app.get("/solicitudes-soporte", async (req, res) => {
+    try{
+        const { usuarioId } = req.query;
+        const filtro = usuarioId ? { usuarioId } : {};
+
+        const solicitudes_soporte = await coleccion_soporte.find(filtro).toArray();
+        res.json(solicitudes_soporte);
+    } catch (error) {
+        console.error("Error al obtener solicitudes:", error);
+        res.status(500).json({ mensaje: "Hubo un error en el servidor" });
+    }
+})
+app.get("/carrito", async (req, res) => {
+    try{
+        const { usuarioId } = req.query;
+        const filtro = usuarioId ? { usuarioId } : {};
+
+        const carrito = await coleccion_carrito.find(filtro).toArray();
+        res.json(carrito);
+    } catch (error) {
+        console.error("Error al obtener carrito:", error);
+        res.status(500).json({ mensaje: "Hubo un error en el servidor" });
+    }
+})
 
 /* Registro y login de usuarios */
 
@@ -79,13 +109,17 @@ app.post("/register", async (req, res) => {
 
         if (UsuariosRegistrados === null) {
             // 1. Insertamos el usuario en MongoDB
+            const saltRounds = 10;
+            datos.password = await bcrypt.hash(datos.password, saltRounds);
+            
             const resultado = await coleccion.insertOne(datos);
             
             // 2. IMPORTANTE: Le agregamos al objeto 'datos' el _id que le asignó MongoDB nativamente
             datos._id = resultado.insertedId;
 
             // 3. Enviamos el objeto 'datos' completo. Para que se loguee directo luego del registro
-            res.json(datos); 
+            const { password, ...datosSinPassword } = datos;
+            res.json(datosSinPassword);
             
         } else {
             // Si el usuario ya existe, devolvemos un 400 (Bad Request)
@@ -101,18 +135,23 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
     try {
         const usuarios = req.body;
-        const correoMinuscula = usuarios.correo.toLowerCase(); // Corregido el uso aquí
-        
+        const correoMinuscula = usuarios.correo.toLowerCase();
+
         const UsuariosRegistrados = await coleccion.findOne({ correo: correoMinuscula });
 
         if (UsuariosRegistrados === null) {
             return res.status(404).json({ mensaje: "El usuario no existe" });
-        } else if (UsuariosRegistrados.password === usuarios.password) {
-            // Enviamos el usuario completo. El frontend se encargará de remover la password si lo requiere
-            res.json(UsuariosRegistrados);
+        }
+
+        const passwordCorrecta = await bcrypt.compare(usuarios.password, UsuariosRegistrados.password);
+
+        if (passwordCorrecta) {
+            const { password, ...usuarioSinPassword } = UsuariosRegistrados;
+            res.json(usuarioSinPassword);
         } else {
             return res.status(401).json({ mensaje: "El correo o la contraseña no coinciden" });
         }
+
     } catch (error) {
         console.error("Error en login:", error);
         res.status(500).json({ mensaje: "Hubo un error en el servidor" });
@@ -281,6 +320,71 @@ app.delete('/productos/:id', async (req, res) => {
 
     } catch (error) {
         console.error("Error al eliminar:", error);
+        res.status(500).json({ mensaje: "Hubo un error en el servidor" });
+    }
+});
+app.post("/solicitudes-soporte", async (req, res) => {
+    try {
+        console.log(req.body);
+        const campos = req.body;
+
+        const resultado = await coleccion_soporte.insertOne(campos);
+        campos._id = resultado.insertedId;
+
+        campos.mensaje = "Mensaje enviado correctamente";
+        res.json(campos);
+
+    } catch (error) {
+        console.error("Error al enviar solicitud de soporte:", error);
+        res.status(500).json({ mensaje: "Hubo un error en el servidor" });
+    }
+});
+// Agregar un producto (o sumarle cantidad si ya estaba)
+app.post("/carrito", async (req, res) => {
+    try {
+        const { usuarioId, productoId, nombre, precio, imagen } = req.body;
+
+        if (!usuarioId) {
+            return res.status(400).json({ mensaje: "Debes iniciar sesión para agregar al carrito" });
+        }
+
+        const itemExistente = await coleccion_carrito.findOne({ usuarioId, productoId });
+
+        if (itemExistente) {
+            await coleccion_carrito.updateOne(
+                { _id: itemExistente._id },
+                { $inc: { cantidad: 1 } }
+            );
+        } else {
+            await coleccion_carrito.insertOne({
+                usuarioId, productoId, nombre, precio, imagen, cantidad: 1
+            });
+        }
+
+        res.json({ mensaje: "Producto agregado al carrito" });
+    } catch (error) {
+        console.error("Error al agregar al carrito:", error);
+        res.status(500).json({ mensaje: "Hubo un error en el servidor" });
+    }
+});
+// Quitar un ítem del carrito (por su _id de documento en "carritos")
+app.delete("/carrito/:id", async (req, res) => {
+    try {
+        await coleccion_carrito.deleteOne({ _id: new ObjectId(req.params.id) });
+        res.json({ mensaje: "Producto eliminado del carrito" });
+    } catch (error) {
+        console.error("Error al eliminar del carrito:", error);
+        res.status(500).json({ mensaje: "Hubo un error en el servidor" });
+    }
+});
+
+// Vaciar el carrito completo de un usuario (al confirmar compra)
+app.delete("/carrito/usuario/:usuarioId", async (req, res) => {
+    try {
+        await coleccion_carrito.deleteMany({ usuarioId: req.params.usuarioId });
+        res.json({ mensaje: "Carrito vaciado" });
+    } catch (error) {
+        console.error("Error al vaciar carrito:", error);
         res.status(500).json({ mensaje: "Hubo un error en el servidor" });
     }
 });

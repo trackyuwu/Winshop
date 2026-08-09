@@ -5,6 +5,7 @@ let user = document.getElementById("nav-user");
 let panelVendedor = document.getElementById("nav-panel");
 let carrito = document.getElementById("nav-cart");
 let panelAdmin = document.getElementById("nav-panelAdmin");
+let soporte = document.getElementById("nav-support")
 
 function actualizarNavbar(){
     let usuarioTexto = localStorage.getItem("usuarios");
@@ -15,6 +16,7 @@ function actualizarNavbar(){
         logout.style.display = "block";
         user.style.display = "block";
         carrito.style.display = "block";
+        soporte.style.display = "block";
         user.querySelector("a").textContent = usuarioObjeto.nombre
         if(usuarioObjeto.rol === "vendedor"){
             panelVendedor.style.display = "block"
