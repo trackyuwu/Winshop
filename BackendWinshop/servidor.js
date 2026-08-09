@@ -367,6 +367,44 @@ app.post("/carrito", async (req, res) => {
         res.status(500).json({ mensaje: "Hubo un error en el servidor" });
     }
 });
+// Sumar una unidad a un ítem del carrito
+app.put("/carrito/:id/sumar", async (req, res) => {
+    try {
+        await coleccion_carrito.updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $inc: { cantidad: 1 } }
+        );
+        res.json({ mensaje: "Cantidad actualizada" });
+    } catch (error) {
+        console.error("Error al sumar cantidad:", error);
+        res.status(500).json({ mensaje: "Hubo un error en el servidor" });
+    }
+});
+
+// Restar una unidad a un ítem del carrito (si llega a 0, se elimina)
+app.put("/carrito/:id/restar", async (req, res) => {
+    try {
+        const item = await coleccion_carrito.findOne({ _id: new ObjectId(req.params.id) });
+
+        if (!item) {
+            return res.status(404).json({ mensaje: "Ítem no encontrado" });
+        }
+
+        if (item.cantidad <= 1) {
+            await coleccion_carrito.deleteOne({ _id: new ObjectId(req.params.id) });
+        } else {
+            await coleccion_carrito.updateOne(
+                { _id: new ObjectId(req.params.id) },
+                { $inc: { cantidad: -1 } }
+            );
+        }
+
+        res.json({ mensaje: "Cantidad actualizada" });
+    } catch (error) {
+        console.error("Error al restar cantidad:", error);
+        res.status(500).json({ mensaje: "Hubo un error en el servidor" });
+    }
+});
 // Quitar un ítem del carrito (por su _id de documento en "carritos")
 app.delete("/carrito/:id", async (req, res) => {
     try {

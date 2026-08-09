@@ -92,6 +92,22 @@ async function quitarDelCarrito(idDocumento) {
 }
 
 // ==========================================================================
+// Sumar / restar una unidad a un ítem del carrito
+// ==========================================================================
+async function cambiarCantidad(idDocumento, accion) {
+    try {
+        await fetch(`http://localhost:3000/carrito/${idDocumento}/${accion}`, {
+            method: "PUT"
+        });
+
+        await actualizarContadorCarrito();
+        await renderCarritoPanel();
+    } catch (error) {
+        console.error("Error al cambiar cantidad:", error);
+    }
+}
+
+// ==========================================================================
 // Renderizar el panel completo del carrito (solo en carrito.html)
 // ==========================================================================
 async function renderCarritoPanel() {
@@ -134,7 +150,12 @@ async function renderCarritoPanel() {
 
                 <div class="carrito-item-info">
                     <span class="carrito-item-nombre">${item.nombre}</span>
-                    <span class="carrito-item-cantidad">Cantidad: ${item.cantidad}</span>
+
+                    <div class="carrito-item-controles">
+                        <button class="btn-cantidad btn-restar" data-id="${item._id}" title="Restar">−</button>
+                        <span class="carrito-item-cantidad">${item.cantidad}</span>
+                        <button class="btn-cantidad btn-sumar" data-id="${item._id}" title="Sumar">+</button>
+                    </div>
                 </div>
 
                 <div class="carrito-item-precio">
@@ -179,12 +200,24 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarContadorCarrito();
     renderCarritoPanel();
 
-    // Click en "quitar" dentro de la lista (delegado, porque los <li> se regeneran)
+    // Click en "quitar" o en +/- dentro de la lista (delegado, porque los <li> se regeneran)
     const listaUl = document.querySelector("#Productos-agregados ul");
     if (listaUl) {
         listaUl.addEventListener("click", (e) => {
-            if (!e.target.classList.contains("btn-quitar-item")) return;
-            quitarDelCarrito(e.target.dataset.id);
+            if (e.target.classList.contains("btn-quitar-item")) {
+                quitarDelCarrito(e.target.dataset.id);
+                return;
+            }
+
+            if (e.target.classList.contains("btn-sumar")) {
+                cambiarCantidad(e.target.dataset.id, "sumar");
+                return;
+            }
+
+            if (e.target.classList.contains("btn-restar")) {
+                cambiarCantidad(e.target.dataset.id, "restar");
+                return;
+            }
         });
     }
 
