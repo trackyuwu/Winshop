@@ -10,7 +10,7 @@ async function cargarRecienLlegados() {
         const res = await fetch("http://localhost:3000/productos");
         const productosData = await res.json();
 
-        // Tomamos los últimos 12 productos (los más recientes según orden de inserción en Mongo)
+        // Tomamos los últimos 10 productos (los más recientes según orden de inserción en Mongo)
         listaVitrinaGlobal = productosData.slice(-10).reverse();
 
         renderVitrina(listaVitrinaGlobal);

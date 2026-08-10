@@ -66,7 +66,7 @@ async function enviarSolicitudSoporte() {
 }
 
 // ==========================================================================
-// Toast (notificación flotante) — igual al que usas en el resto del sitio
+// Toast (notificación flotante) — igual al que se usa en el resto del sitio
 // ==========================================================================
 function mostrarToast(mensaje, tipo = "success") {
     const contenedor = document.getElementById("toast-container") || crearContenedorToast();
