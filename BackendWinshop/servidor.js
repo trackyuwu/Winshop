@@ -33,10 +33,6 @@ async function conectar(){
 
 conectar();
 
-/*app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/Estructura/Index.html'));
-});*/
-
 app.get("/", (req, res) => {
     res.send("Servidor funcionando");
 });
