@@ -33,10 +33,9 @@ async function conectar(){
 
 conectar();
 
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/Estructura/Index.html'));
-    res.sendFile(path.join(__dirname, '../frontend/Estructura/Login.html'));
-});
+});*/
 
 app.get("/", (req, res) => {
     res.send("Servidor funcionando");
