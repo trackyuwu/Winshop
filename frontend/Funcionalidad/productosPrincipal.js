@@ -7,7 +7,7 @@ let categoriaActiva = null; // guarda el _id de la categoría seleccionada, o nu
 // ==========================
 async function categorias() {
     try {
-        const res = await fetch("http://localhost:3000/categorias");
+        const res = await fetch("https://winshop-y543.onrender.com/categorias");
         const categoriasData = await res.json();
 
         listaCategoriasGlobal = categoriasData;
@@ -56,7 +56,7 @@ function seleccionarCategoria(item) {
 // ==========================
 async function productos() {
     try {
-        const res = await fetch("http://localhost:3000/productos");
+        const res = await fetch("https://winshop-y543.onrender.com/productos");
         const productosData = await res.json();
 
         listaProductosGlobal = productosData;

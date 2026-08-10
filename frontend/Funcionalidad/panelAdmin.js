@@ -9,7 +9,7 @@ if (!usuarioObjeto || usuarioObjeto.rol !== "admin") {
 let listaUsuariosGlobal = [];
 
 async function usuarios() {
-    const res = await fetch("http://localhost:3000/usuarios");
+    const res = await fetch("https://winshop-y543.onrender.com/usuarios");
     const users = await res.json();
 
     listaUsuariosGlobal = users;
@@ -118,7 +118,7 @@ async function actualizarUsuarios() {
     let nuevoRol = seleccionarNuevoRol.value
     let tabla = document.getElementById("tabla-usuarios-body");
 
-    const res = await fetch(`http://localhost:3000/usuarios/${id}`, {
+    const res = await fetch(`https://winshop-y543.onrender.com/usuarios/${id}`, {
         method: "PUT",
         headers: {
         "Content-Type": "application/json"
@@ -151,7 +151,7 @@ async function eliminarUsuario() {
     let usuarioEliminado = document.getElementById("modal-eliminar-id").value;
     let tabla = document.getElementById("tabla-usuarios-body");
 
-    const res = await fetch(`http://localhost:3000/usuarios/${usuarioEliminado}`, {
+    const res = await fetch(`https://winshop-y543.onrender.com/usuarios/${usuarioEliminado}`, {
         method: "DELETE",
     });
 

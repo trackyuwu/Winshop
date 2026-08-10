@@ -17,7 +17,7 @@ formLogin.addEventListener("submit", async (e) => {
 
     // hacemos un try/catch para controlar si se cae el servidor de Node
     try {
-        const res = await fetch("http://localhost:3000/login", {
+        const res = await fetch("https://winshop-y543.onrender.com/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

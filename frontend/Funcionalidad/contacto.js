@@ -41,7 +41,7 @@ async function enviarSolicitudSoporte() {
     const usuarioId = usuario?._id ?? null;
 
     try {
-        const res = await fetch("http://localhost:3000/solicitudes-soporte", {
+        const res = await fetch("https://winshop-y543.onrender.com/solicitudes-soporte", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nombre, correo, asunto, mensaje, usuarioId }),

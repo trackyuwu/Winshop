@@ -18,7 +18,7 @@ let listaProductosGlobal = [];
 // ==========================
 async function cargarCategorias() {
     try {
-        const res = await fetch("http://localhost:3000/categorias");
+        const res = await fetch("https://winshop-y543.onrender.com/categorias");
         const categorias = await res.json();
 
         const selectAgregar = document.getElementById("categoria");
@@ -52,8 +52,8 @@ async function productos() {
         // El admin ve todos los productos (sin filtrar).
         // El vendedor solo ve los suyos.
         const url = esAdmin
-            ? "http://localhost:3000/productos"
-            : `http://localhost:3000/productos?vendedorId=${usuario?._id}`;
+            ? "https://winshop-y543.onrender.com/productos"
+            : `https://winshop-y543.onrender.com/productos?vendedorId=${usuario?._id}`;
 
         const res = await fetch(url);
         const productosData = await res.json();
@@ -142,7 +142,7 @@ async function agregarProducto() {
     const vendedorId = usuario?._id;
 
     try {
-        const res = await fetch("http://localhost:3000/productos", {
+        const res = await fetch("https://winshop-y543.onrender.com/productos", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nombre, precio, stock: cantidad, imagen, categoria, descripcion, vendedorId }),
@@ -228,7 +228,7 @@ async function actualizarProducto() {
     );
 
     try {
-        const res = await fetch(`http://localhost:3000/productos/${id}`, {
+        const res = await fetch(`https://winshop-y543.onrender.com/productos/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nombre, precio, stock: cantidad, imagen, categoria, descripcion }),
@@ -264,7 +264,7 @@ async function eliminarProducto() {
     const id = document.getElementById("modal-eliminar-producto-id").value;
 
     try {
-        const res = await fetch(`http://localhost:3000/productos/${id}`, {
+        const res = await fetch(`https://winshop-y543.onrender.com/productos/${id}`, {
             method: "DELETE",
         });
 

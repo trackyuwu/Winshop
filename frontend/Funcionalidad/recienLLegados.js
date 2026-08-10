@@ -7,7 +7,7 @@ let listaVitrinaGlobal = [];
 
 async function cargarRecienLlegados() {
     try {
-        const res = await fetch("http://localhost:3000/productos");
+        const res = await fetch("https://winshop-y543.onrender.com/productos");
         const productosData = await res.json();
 
         // Tomamos los últimos 10 productos (los más recientes según orden de inserción en Mongo)

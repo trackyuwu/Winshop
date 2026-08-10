@@ -22,7 +22,7 @@ async function actualizarContadorCarrito() {
     }
 
     try {
-        const res = await fetch(`http://localhost:3000/carrito?usuarioId=${usuario._id}`);
+        const res = await fetch(`https://winshop-y543.onrender.com/carrito?usuarioId=${usuario._id}`);
         const carrito = await res.json();
 
         const totalUnidades = carrito.reduce((acc, item) => acc + item.cantidad, 0);
@@ -46,7 +46,7 @@ async function agregarAlCarrito(producto) {
     }
 
     try {
-        const res = await fetch("http://localhost:3000/carrito", {
+        const res = await fetch("https://winshop-y543.onrender.com/carrito", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -80,7 +80,7 @@ async function agregarAlCarrito(producto) {
 // ==========================================================================
 async function quitarDelCarrito(idDocumento) {
     try {
-        await fetch(`http://localhost:3000/carrito/${idDocumento}`, {
+        await fetch(`https://winshop-y543.onrender.com/carrito/${idDocumento}`, {
             method: "DELETE"
         });
 
@@ -96,7 +96,7 @@ async function quitarDelCarrito(idDocumento) {
 // ==========================================================================
 async function cambiarCantidad(idDocumento, accion) {
     try {
-        await fetch(`http://localhost:3000/carrito/${idDocumento}/${accion}`, {
+        await fetch(`https://winshop-y543.onrender.com/carrito/${idDocumento}/${accion}`, {
             method: "PUT"
         });
 
@@ -128,7 +128,7 @@ async function renderCarritoPanel() {
     }
 
     try {
-        const res = await fetch(`http://localhost:3000/carrito?usuarioId=${usuario._id}`);
+        const res = await fetch(`https://winshop-y543.onrender.com/carrito?usuarioId=${usuario._id}`);
         const carrito = await res.json();
 
         if (carrito.length === 0) {
@@ -182,7 +182,7 @@ async function vaciarCarrito() {
     if (!usuario) return;
 
     try {
-        await fetch(`http://localhost:3000/carrito/usuario/${usuario._id}`, {
+        await fetch(`https://winshop-y543.onrender.com/carrito/usuario/${usuario._id}`, {
             method: "DELETE"
         });
 
@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const usuario = obtenerUsuarioActual();
             if (!usuario) return;
 
-            const res = await fetch(`http://localhost:3000/carrito?usuarioId=${usuario._id}`);
+            const res = await fetch(`https://winshop-y543.onrender.com/carrito?usuarioId=${usuario._id}`);
             const carrito = await res.json();
             if (carrito.length === 0) return;
 
