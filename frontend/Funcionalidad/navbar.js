@@ -13,23 +13,23 @@ function actualizarNavbar(){
         const usuarioObjeto = JSON.parse(usuarioTexto);
         login.style.display = "none";
         registro.style.display = "none";
-        logout.style.display = "block";
-        user.style.display = "block";
-        carrito.style.display = "block";
-        soporte.style.display = "block";
+    
+        user.style.display = "inline-block";
+        carrito.style.display = "inline-block";
+        soporte.style.display = "inline-block";
         user.querySelector("a").textContent = usuarioObjeto.nombre
         if(usuarioObjeto.rol === "vendedor"){
-            panelVendedor.style.display = "block"
+            panelVendedor.style.display = "inline-block"
         }else if(usuarioObjeto.rol === "admin"){
-            panelVendedor.style.display = "block";
-            panelAdmin.style.display = "block";
+            panelVendedor.style.display = "inline-block";
+            panelAdmin.style.display = "inline-block";
         }else{
             panelAdmin.style.display = "none";
             panelVendedor.style.display = "none";
         }
     }else{
-        login.style.display = "block";
-        registro.style.display = "block";
+        login.style.display = "inline-block";
+        registro.style.display = "inline-block";
         logout.style.display = "none";
     }
     
