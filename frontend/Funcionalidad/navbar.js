@@ -19,7 +19,7 @@ function actualizarNavbar(){
         soporte.style.display = "block";
         user.querySelector("a").textContent = usuarioObjeto.nombre
         if(usuarioObjeto.rol === "vendedor"){
-            panelVendedor.style.display = "block"
+            panelVendedor.style.display = ""
         }else if(usuarioObjeto.rol === "admin"){
             panelVendedor.style.display = "block";
             panelAdmin.style.display = "block";
