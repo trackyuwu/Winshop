@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const url = "mongodb://localhost:27017";
+const url = process.env.MONGO_URI || "mongodb://localhost:27017";
 const client = new MongoClient(url);
 
 let db;
