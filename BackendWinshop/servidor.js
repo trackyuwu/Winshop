@@ -8,10 +8,10 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-/*app.use('/Estructura', express.static(path.join(__dirname, '../frontend/Estructura')));
+app.use('/Estructura', express.static(path.join(__dirname, '../frontend/Estructura')));
 app.use('/Diseño', express.static(path.join(__dirname, '../frontend/Diseño')));
 app.use('/Funcionalidad', express.static(path.join(__dirname, '../frontend/Funcionalidad')));
-app.use('/Funcionalidad', express.static(path.join(__dirname, '../frontend/Imagenes')));*/
+app.use('/Funcionalidad', express.static(path.join(__dirname, '../frontend/Imagenes')));
 
 const url = process.env.MONGO_URI || "mongodb://localhost:27017";
 const client = new MongoClient(url);
@@ -36,9 +36,9 @@ async function conectar(){
 
 conectar();
 
-/*app.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/Estructura/Index.html'));
-});*/
+});
 
 app.get("/", (req, res) => {
     res.send("Servidor funcionando");
