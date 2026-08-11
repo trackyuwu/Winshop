@@ -272,13 +272,6 @@ app.put('/productos/:id', async (req, res) => {
             return res.status(404).json({ mensaje: "producto no encontrado" });
         }
 
-        // 2. ESCUDO DE SEGURIDAD
-        /*if (usuarioAActualizar.rol === 'admin') {
-            return res.status(403).json({ 
-                mensaje: "Seguridad crítica: No está permitido cambiar cuentas de Administrador" 
-            });
-        }*/
-
         // 3. Actualización de campos
         await coleccion_productos.updateOne(
             { _id: new ObjectId(idProducto) },
@@ -312,13 +305,6 @@ app.delete('/productos/:id', async (req, res) => {
         if (!productoEliminar) {
             return res.status(404).json({ mensaje: "Usuario no encontrado" });
         }
-
-        // 2. ESCUDO DE SEGURIDAD
-        /*if (usuarioAEliminar.rol === 'admin') {
-            return res.status(403).json({ 
-                mensaje: "Seguridad crítica: No está permitido eliminar cuentas de Administrador" 
-            });
-        }*/
 
         // 3. Borrado definitivo
         await coleccion_productos.deleteOne({ _id: new ObjectId(idProducto) });
